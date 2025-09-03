@@ -52,60 +52,61 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-red-400 p-6">
-      <h1 className="text-4xl text-white font-bold text-center mb-8 animate-pulse">Mood-Based Movie/Series Finder</h1>
+    <>
+      <div className="app">
+      <h1 className="title">Mood-Based Movie/Series Finder</h1>
 
-      <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
+      <div className="controls">
         <input
           type="text"
           placeholder="Enter your mood"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="p-2 rounded-lg border-2 border-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-black"
+          className="input-box"
         />
 
         <select
           value={selectedType}
           onChange={(e) => setSelectedType(e.target.value)}
-          className="p-2 rounded-lg border-2 border-white focus:outline-none focus:ring-2 focus:ring-yellow-300 text-black"
+          className="dropdown"
         >
           <option value="">Select type</option>
           <option value="movie">Movie</option>
           <option value="series">Series</option>
         </select>
 
-        <button
-          onClick={handleSearch}
-          className="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-2 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
-        >
+        <button onClick={handleSearch} className="search-btn">
           Search
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="results">
         {movies.length > 0 ? (
           movies.map((m) => (
-            <div
-              key={m.imdbID}
-              className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-500 hover:scale-105 animate-fadeIn"
-            >
+            <div key={m.imdbID} className="card">
               <img
-                src={m.Poster !== "N/A" ? m.Poster : "https://via.placeholder.com/300x450?text=No+Image"}
+                src={
+                  m.Poster !== "N/A"
+                    ? m.Poster
+                    :"https://via.placeholder.com/300x450?text=No+Image"
+                }
                 alt={m.Title}
-                className="w-full h-72 object-cover"
+                className="poster"
               />
-              <div className="p-4">
-                <h3 className="text-xl font-bold mb-2">{m.Title}</h3>
-                <p className="text-gray-600">Year: {m.Year}</p>
+              <div className="card-body">
+                <h3 className="card-title">{m.Title}</h3>
+                <p className="card-text">Year: {m.Year}</p>
               </div>
             </div>
-          ))
-        ) : (
-          <p className="text-white text-center col-span-full">No results yet</p>
-        )}
-      </div>
-    </div>
-  );
+            ))
+            ) : (
+            <p className="no-results">No results yet</p>
+            )}
+          </div>
+        </div>
+
+      </>
+    );
 }
 
 export default App;
