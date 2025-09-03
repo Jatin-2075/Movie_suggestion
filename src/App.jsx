@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [input, setInput] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [page, setPage] = useState(1);
 
   const moodsChart = {
     sad: "drama",
@@ -38,11 +39,11 @@ function App() {
     const keyword = moodsChart[input.toLowerCase()];
     if (!keyword) return alert("Mood not found!");
 
-    fetch(`https://www.omdbapi.com/?s=${keyword}&type=${selectedType}&apikey=f8610afc`)
+    fetch(`https://www.omdbapi.com/?s=${keyword}&type=${selectedType}&page=${page}&apikey=f8610afc`)
       .then(res => res.json())
       .then(data => {
         if (data.Response === "True") {
-          setMovies(data.Search.slice(0, 5));
+          setMovies(data.Search);
         } else {
           setMovies([]);
           alert("No results found");
@@ -51,9 +52,19 @@ function App() {
       .catch(err => console.log(err));
   };
 
+  // Run search whenever page changes (but only if we already have input & type)
+  useEffect(() => {
+    if (input && selectedType) {
+      handleSearch();
+    }
+  }, [page]);
+
+  const handleNext = () => {
+    setPage(prev => prev + 1);
+  };
+
   return (
-    <>
-      <div className="app">
+    <div className="app">
       <h1 className="title">Mood-Based Movie/Series Finder</h1>
 
       <div className="controls">
@@ -75,7 +86,13 @@ function App() {
           <option value="series">Series</option>
         </select>
 
-        <button onClick={handleSearch} className="search-btn">
+        <button
+          onClick={() => {
+            setPage(1); // reset to first page
+            handleSearch();
+          }}
+          className="search-btn"
+        >
           Search
         </button>
       </div>
@@ -88,7 +105,7 @@ function App() {
                 src={
                   m.Poster !== "N/A"
                     ? m.Poster
-                    :"https://via.placeholder.com/300x450?text=No+Image"
+                    : "https://via.placeholder.com/300x450?text=No+Image"
                 }
                 alt={m.Title}
                 className="poster"
@@ -98,15 +115,21 @@ function App() {
                 <p className="card-text">Year: {m.Year}</p>
               </div>
             </div>
-            ))
-            ) : (
-            <p className="no-results">No results yet</p>
-            )}
-          </div>
-        </div>
+          ))
+        ) : (
+          <p className="no-results">No results yet</p>
+        )}
+      </div>
 
-      </>
-    );
+      <div className="pagination">
+        {movies.length > 0 && (
+          <button onClick={handleNext} className="next-btn">
+            Next →
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default App;
