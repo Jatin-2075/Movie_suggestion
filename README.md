@@ -1,12 +1,45 @@
-# React + Vite
+# Moodie Movie 🔥
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A lightweight movie search and recommendation web app built with React and the OMDb API.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Moodie Movie enables users to search movies in real-time, view detailed information, and filter results by category. Built with a clean, responsive design and deployed on Vercel for instant performance.
 
-## Expanding the ESLint configuration
+## ✨ Key Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Real-Time Search** – Live API requests to OMDb with intelligent error handling
+- **Movie Cards** – Display poster, title, year, type, and quick actions
+- **Movie Details** – Full plot, genre, actors, ratings, and runtime via modal or expanded view
+- **Category Filter** – Refine results by Movie, Series, Episode, or All
+- **Responsive UI** – Seamless experience across mobile, tablet, and desktop
+- **Fast Deployment** – Hosted on Vercel with CDN backing
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React, JSX, Custom CSS
+- **API:** OMDb Web API
+- **Deployment:** Vercel
+
+## 🚀 Live Demo
+
+[https://movie-suggestion-five.vercel.app/](https://movie-suggestion-five.vercel.app/)
+
+## 📂 Project Structure
+
+```
+frontend/Movie_suggestion/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── App.jsx
+├── public/
+└── package.json
+```
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Add your OMDb API key to `.env`
+4. Run: `npm start`
